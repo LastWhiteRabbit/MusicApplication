@@ -18,6 +18,5 @@ namespace RS1_Seminarski.Models
 
         public Artist Artist { get; set; }
 
-        public Track Track { get; set; }
     }
 }
