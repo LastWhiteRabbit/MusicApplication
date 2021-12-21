@@ -1,8 +1,0 @@
-{
-  "runtimeOptions": {
-    "additionalProbingPaths": [
-      "C:\\Users\\elved\\.dotnet\\store\\|arch|\\|tfm|",
-      "C:\\Users\\elved\\.nuget\\packages"
-    ]
-  }
-}
