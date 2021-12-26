@@ -20,5 +20,17 @@ namespace RS1_Seminarski.Controllers
             IEnumerable<Track> objList = _db.Track;
             return View(objList); 
         }
+        public IActionResult Create()
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(Track obj)
+        {
+            _db.Track.Add(obj);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
+        }
     }
 }
