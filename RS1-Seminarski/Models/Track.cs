@@ -12,6 +12,7 @@ namespace RS1_Seminarski.Models
         [Key]
         public int Id { get; set; }
         [DisplayName("Track name")]
+        [Required]
         public string TrackName { get; set; }
         [DisplayName("Track length")]
         public string Length { get; set; }

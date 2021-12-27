@@ -12,6 +12,7 @@ namespace RS1_Seminarski.Models
         [Key]
         public int Id { get; set; }
         [DisplayName("Genre")]
+        [Required]
         public string GenreName { get; set; }
 
     }

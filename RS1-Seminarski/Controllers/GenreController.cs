@@ -30,9 +30,13 @@ namespace RS1_Seminarski.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(Genre obj)
         {
-            _db.Add(obj);
-            _db.SaveChanges();
-            return RedirectToAction("Index");
+            if (ModelState.IsValid)
+            {
+                _db.Add(obj);
+                _db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(obj);
         }
     }
 }
