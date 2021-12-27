@@ -35,7 +35,36 @@ namespace RS1_Seminarski.Controllers
                 return RedirectToAction("Index");
             }
             return View(obj);
+        }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeletePost(int? id)
+        {
+            var obj = _db.Track.Find(id);
+            if(obj == null)
+            {
+                return NotFound();
+            }
+
+            _db.Track.Remove(obj);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult Delete(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+
+            var obj = _db.Track.Find(id);
+            if(obj == null)
+            {
+                return NotFound();
+            }
+            return View(obj);
         }
     }
 }

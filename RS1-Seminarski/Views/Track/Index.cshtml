@@ -36,9 +36,17 @@
     @foreach (var item in Model)
     {
         <tr>
-        <td width="30%">@item.TrackName</td>
-        <td width="30%">@item.Length</td>
-        <td width="30%"></td>
+            <td width="18%">@item.TrackName</td>
+            <td width="18%">@item.Length</td>
+            <td width="18%"></td>
+            <td width="18%"></td>
+            <td width="18%"></td>
+            <td width="10%">
+                <div class="col-6 text-right">
+                    <a asp-controller="Track" asp-action="Delete" asp-route-Id="@item.Id" class="btn btn-danger mx-1">Delete</a>
+                    <a asp-controller="Track" asp-action="Update" asp-route-Id="@item.Id" class="btn btn-primary mx-1">Update</a>
+                </div>
+            </td>
         </tr>
     }
     </tbody>
