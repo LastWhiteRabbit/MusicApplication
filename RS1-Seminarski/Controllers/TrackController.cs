@@ -30,6 +30,7 @@ namespace RS1_Seminarski.Controllers
         {
             if (ModelState.IsValid)
             {
+                obj.GenreId = 1;
                 _db.Track.Add(obj);
                 _db.SaveChanges();
                 return RedirectToAction("Index");
