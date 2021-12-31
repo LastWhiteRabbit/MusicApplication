@@ -9,23 +9,25 @@ using System.Threading.Tasks;
 
 namespace RS1_Seminarski.Controllers
 {
-    public class TrackController : Controller
+    public class PlaylistController : Controller
     {
-        private readonly ApplicationDbContext _db;
-        public TrackController(ApplicationDbContext db)
+        public readonly ApplicationDbContext _db;
+
+        public PlaylistController(ApplicationDbContext db)
         {
             _db = db;
         }
         public IActionResult Index()
         {
-            IEnumerable<Track> objList = _db.Track;
-            return View(objList); 
+            IEnumerable<Playlist> objList = _db.Playlist;
+            return View(objList);
         }
+
         public IActionResult Create()
         {
-            IEnumerable<SelectListItem> TypeDropDown = _db.Genre.Select(x => new SelectListItem
+            IEnumerable<SelectListItem> TypeDropDown = _db.Track.Select(x => new SelectListItem
             {
-                Text = x.GenreName,
+                Text = x.TrackName,
                 Value = x.Id.ToString()
             });
 
@@ -33,31 +35,33 @@ namespace RS1_Seminarski.Controllers
 
             return View();
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Track obj)
+        public IActionResult Create(Playlist obj)
         {
             if (ModelState.IsValid)
             {
                 //obj.GenreId = 1;
-                _db.Track.Add(obj);
+                _db.Playlist.Add(obj);
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(obj);
         }
 
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult DeletePost(int? id)
         {
-            var obj = _db.Track.Find(id);
-            if(obj == null)
+            var obj = _db.Playlist.Find(id);
+            if (obj == null)
             {
                 return NotFound();
             }
 
-            _db.Track.Remove(obj);
+            _db.Playlist.Remove(obj);
             _db.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -69,8 +73,8 @@ namespace RS1_Seminarski.Controllers
                 return NotFound();
             }
 
-            var obj = _db.Track.Find(id);
-            if(obj == null)
+            var obj = _db.Playlist.Find(id);
+            if (obj == null)
             {
                 return NotFound();
             }
@@ -79,9 +83,9 @@ namespace RS1_Seminarski.Controllers
 
         public IActionResult Update(int? id)
         {
-            IEnumerable<SelectListItem> TypeDropDown = _db.Genre.Select(x => new SelectListItem
+            IEnumerable<SelectListItem> TypeDropDown = _db.Track.Select(x => new SelectListItem
             {
-                Text = x.GenreName,
+                Text = x.TrackName,
                 Value = x.Id.ToString()
             });
 
@@ -91,7 +95,7 @@ namespace RS1_Seminarski.Controllers
                 return NotFound();
             }
 
-            var obj = _db.Track.Find(id);
+            var obj = _db.Playlist.Find(id);
             if (obj == null)
             {
                 return NotFound();
@@ -101,11 +105,11 @@ namespace RS1_Seminarski.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Update(Track obj)
+        public IActionResult Update(Playlist obj)
         {
             if (ModelState.IsValid)
             {
-                _db.Track.Update(obj);
+                _db.Playlist.Update(obj);
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }

@@ -1,0 +1,53 @@
+﻿@model IEnumerable<Playlist>
+<div class="container p-3"
+     <div class="row pt-4"
+          <div class=" col-6"
+               <h2 class="text-primary"> Playlist </h2>
+        </div>
+        <div class="col-6 text-right">
+            <a asp-controller="Playlist" asp-action="Create" class="btn btn-primary">Create new Playlist</a>
+        </div>
+    </div>
+    <br />
+
+@if (Model.Count() > 0)
+{
+    <table class="table table-bordered table-striped" style="width:100%">
+    <thead>
+    <tr>
+    <th>
+    Playlist name
+    </th>
+    <th>
+    Playlist length
+    </th>
+    <th>
+    Tracks
+    </th>
+
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+        <td width="18%">@item.PlaylistName</td>
+        <td width="18%">@item.PlaylistSongNumber</td>
+        <td width="18%"></td>
+        <td width="10%">
+        <div class="col-6 text-right">
+        <a asp-controller="Playlist" asp-action="Delete" asp-route-Id="@item.Id" class="btn btn-danger mx-1">Delete</a>
+        <a asp-controller="Playlist" asp-action="Update" asp-route-Id="@item.Id" class="btn btn-primary mx-1">Update</a>
+        </div>
+        </td>
+        </tr>
+    }
+    </tbody>
+    </table>
+}
+else
+{
+    <p>No items created yet</p>
+}
+
+</div>
