@@ -26,26 +26,14 @@ namespace RS1_Seminarski.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<byte[]>("AlbumCover")
-                        .HasColumnType("varbinary(max)");
-
                     b.Property<int>("AlbumLength")
                         .HasColumnType("int");
 
                     b.Property<string>("AlbumName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ArtistId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("GenreId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("ArtistId");
-
-                    b.HasIndex("GenreId");
 
                     b.ToTable("Album");
                 });
@@ -61,14 +49,10 @@ namespace RS1_Seminarski.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("ArtistName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("GenreId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("GenreId");
 
                     b.ToTable("Artist");
                 });
@@ -145,30 +129,6 @@ namespace RS1_Seminarski.Migrations
                     b.HasIndex("GenreId");
 
                     b.ToTable("Track");
-                });
-
-            modelBuilder.Entity("RS1_Seminarski.Models.Album", b =>
-                {
-                    b.HasOne("RS1_Seminarski.Models.Artist", "Artist")
-                        .WithMany()
-                        .HasForeignKey("ArtistId");
-
-                    b.HasOne("RS1_Seminarski.Models.Genre", "Genre")
-                        .WithMany()
-                        .HasForeignKey("GenreId");
-
-                    b.Navigation("Artist");
-
-                    b.Navigation("Genre");
-                });
-
-            modelBuilder.Entity("RS1_Seminarski.Models.Artist", b =>
-                {
-                    b.HasOne("RS1_Seminarski.Models.Genre", "Genre")
-                        .WithMany()
-                        .HasForeignKey("GenreId");
-
-                    b.Navigation("Genre");
                 });
 
             modelBuilder.Entity("RS1_Seminarski.Models.Playlist", b =>

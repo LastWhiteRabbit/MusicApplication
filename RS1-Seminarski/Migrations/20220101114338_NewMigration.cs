@@ -1,23 +1,23 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace RS1_Seminarski.Migrations
 {
-    public partial class addInitialModelsToDatabase : Migration
+    public partial class NewMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Genre",
+                name: "Album",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    GenreName = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    AlbumName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AlbumLength = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Genre", x => x.Id);
+                    table.PrimaryKey("PK_Album", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -26,48 +26,25 @@ namespace RS1_Seminarski.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ArtistName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ArtistAge = table.Column<int>(type: "int", nullable: false),
-                    GenreId = table.Column<int>(type: "int", nullable: true)
+                    ArtistName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ArtistAge = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Artist", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Artist_Genre_GenreId",
-                        column: x => x.GenreId,
-                        principalTable: "Genre",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Album",
+                name: "Genre",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    AlbumName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AlbumCover = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
-                    AlbumLength = table.Column<int>(type: "int", nullable: false),
-                    GenreId = table.Column<int>(type: "int", nullable: true),
-                    ArtistId = table.Column<int>(type: "int", nullable: true)
+                    GenreName = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Album", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Album_Artist_ArtistId",
-                        column: x => x.ArtistId,
-                        principalTable: "Artist",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Album_Genre_GenreId",
-                        column: x => x.GenreId,
-                        principalTable: "Genre",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                    table.PrimaryKey("PK_Genre", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -76,9 +53,9 @@ namespace RS1_Seminarski.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    TrackName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TrackName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Length = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    GenreId = table.Column<int>(type: "int", nullable: true),
+                    GenreId = table.Column<int>(type: "int", nullable: false),
                     ArtistId = table.Column<int>(type: "int", nullable: true),
                     AlbumId = table.Column<int>(type: "int", nullable: true)
                 },
@@ -102,7 +79,7 @@ namespace RS1_Seminarski.Migrations
                         column: x => x.GenreId,
                         principalTable: "Genre",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -111,40 +88,25 @@ namespace RS1_Seminarski.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    PlaylistName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PlaylistName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PlaylistSongNumber = table.Column<int>(type: "int", nullable: false),
-                    PlaylistTrackId = table.Column<int>(type: "int", nullable: true)
+                    TrackId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Playlist", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Playlist_Track_PlaylistTrackId",
-                        column: x => x.PlaylistTrackId,
+                        name: "FK_Playlist_Track_TrackId",
+                        column: x => x.TrackId,
                         principalTable: "Track",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Album_ArtistId",
-                table: "Album",
-                column: "ArtistId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Album_GenreId",
-                table: "Album",
-                column: "GenreId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Artist_GenreId",
-                table: "Artist",
-                column: "GenreId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Playlist_PlaylistTrackId",
+                name: "IX_Playlist_TrackId",
                 table: "Playlist",
-                column: "PlaylistTrackId");
+                column: "TrackId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Track_AlbumId",
